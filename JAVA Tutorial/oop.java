@@ -60,7 +60,7 @@ public class Main {
 // Polymorphism
 class Animal {
     public void sound() {
-        System.out.println("This animal makes a sound.");
+        System.out.println("This animal makes a sound.");/ 
     }
 }
 
