@@ -8,13 +8,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
-
-    double firstNum = 0;
-    double secondNum = 0;
-    String operation = "";
-    boolean isOperatorPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         Button multiply = findViewById(R.id.mul);
         Button minus = findViewById(R.id.min);
         Button plus = findViewById(R.id.plus);
+        Button percentage = findViewById(R.id.mod);
         Button equal = findViewById(R.id.equal);
+        Button plusOrMinus = findViewById(R.id.plusOrMinus);
 
         TextView screen = findViewById(R.id.screen);
 
@@ -54,88 +52,142 @@ public class MainActivity extends AppCompatActivity {
         nums.add(num8);
         nums.add(num9);
 
+        // Handle numeric button clicks
         for (Button b : nums) {
             b.setOnClickListener(view -> {
-                // If an operator was pressed, start appending the second number
-                if (isOperatorPressed) {
+                if (!screen.getText().toString().equals("0")) {
                     screen.setText(screen.getText().toString() + b.getText().toString());
                 } else {
-                    // Append the number to the screen
-                    if (!screen.getText().toString().equals("0")) {
-                        screen.setText(screen.getText().toString() + b.getText().toString());
-                    } else {
-                        screen.setText(b.getText().toString());
-                    }
+                    screen.setText(b.getText().toString());
                 }
             });
         }
 
+        // Handle operators
         ArrayList<Button> operators = new ArrayList<>();
         operators.add(plus);
         operators.add(minus);
         operators.add(multiply);
         operators.add(divide);
+        operators.add(percentage);
 
         for (Button b : operators) {
             b.setOnClickListener(view -> {
-                if (!isOperatorPressed) {
-                    // Capture the first number and set operator
-                    firstNum = Double.parseDouble(screen.getText().toString());
-                    operation = b.getText().toString();
-                    screen.setText(screen.getText().toString() + " " + operation + " ");
-                    isOperatorPressed = true; // Start accepting second number
+                String currentText = screen.getText().toString();
+                if (!currentText.isEmpty() && !currentText.endsWith(" ")) {
+                    screen.setText(currentText + " " + b.getText().toString() + " ");
                 }
             });
         }
 
         point.setOnClickListener(view -> {
-            if (!screen.getText().toString().contains(".")) {
-                screen.setText(screen.getText().toString() + ".");
+            String currentText = screen.getText().toString();
+
+            // Split the current text by spaces to isolate the last operand
+            String[] tokens = currentText.split(" ");
+            String lastToken = tokens[tokens.length - 1];
+
+            // Only add a decimal point if the last operand doesn't already contain one
+            if (!lastToken.contains(".")) {
+                screen.setText(currentText + ".");
             }
         });
 
+
         equal.setOnClickListener(view -> {
             try {
-                // Split screen text by spaces to get second number
-                String[] parts = screen.getText().toString().split(" ");
-                if (parts.length < 3) return; // Avoid errors if parts are incomplete
-                secondNum = Double.parseDouble(parts[2]);
-                double result = 0;
+                String expression = screen.getText().toString();
+                double result = calculateExpression(expression);
 
-                switch (operation) {
-                    case "+":
-                        result = firstNum + secondNum;
-                        break;
-                    case "-":
-                        result = firstNum - secondNum;
-                        break;
-                    case "X":
-                        result = firstNum * secondNum;
-                        break;
-                    case "÷":
-                        if (secondNum != 0) {
-                            result = firstNum / secondNum;
-                        } else {
-                            screen.setText("Error");
-                            return;
-                        }
-                        break;
+                // Display result without decimal if it's a whole number
+                if (result == Math.floor(result)) {
+                    screen.setText(String.valueOf((int) result));
+                } else {
+                    screen.setText(String.valueOf(result));
                 }
-
-                screen.setText(String.valueOf(result));
-                firstNum = result; // Update firstNum with result for further calculations
-                isOperatorPressed = false;
             } catch (Exception e) {
                 screen.setText("Error");
             }
         });
 
-        ac.setOnClickListener(view -> {
-            firstNum = 0;
-            secondNum = 0;
-            operation = "";
-            isOperatorPressed = false;
-            screen.setText("0");
+        ac.setOnClickListener(view -> screen.setText("0"));
+
+        // Toggle the sign of the current number
+        plusOrMinus.setOnClickListener(view -> {
+            String currentText = screen.getText().toString();
+            if (!currentText.isEmpty() && !currentText.equals("0")) {
+                try {
+                    double currentNum = Double.parseDouble(currentText);
+                    currentNum = -currentNum; // Toggle the sign
+                    screen.setText(String.valueOf(currentNum));
+                } catch (NumberFormatException e) {
+                    screen.setText("Error");
+                }
+            }
         });
+    }
+
+    private double calculateExpression(String expression) {
+        Stack<Double> numbers = new Stack<>();
+        Stack<Character> operations = new Stack<>();
+        String[] tokens = expression.split(" ");
+
+        for (String token : tokens) {
+            if (isNumeric(token)) {
+                numbers.push(Double.parseDouble(token));
+            } else if (isOperator(token.charAt(0))) {
+                while (!operations.isEmpty() && precedence(operations.peek()) >= precedence(token.charAt(0))) {
+                    double b = numbers.pop();
+                    double a = numbers.pop();
+                    char op = operations.pop();
+                    numbers.push(applyOperation(a, b, op));
+                }
+                operations.push(token.charAt(0));
+            }
+        }
+
+        while (!operations.isEmpty()) {
+            double b = numbers.pop();
+            double a = numbers.pop();
+            char op = operations.pop();
+            numbers.push(applyOperation(a, b, op));
+        }
+        return numbers.pop();
+    }
+
+    private boolean isNumeric(String token) {
+        try {
+            Double.parseDouble(token);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == 'X' || c == '÷' || c == '%';
+    }
+
+    private int precedence(char op) {
+        if (op == 'X' || op == '÷' || op == '%') return 2;
+        if (op == '+' || op == '-') return 1;
+        return 0;
+    }
+
+    private double applyOperation(double a, double b, char op) {
+        switch (op) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case 'X':
+                return a * b;
+            case '÷':
+                if (b == 0) throw new UnsupportedOperationException("Cannot divide by zero");
+                return a / b;
+            case '%':
+                return a % b;
+        }
+        return 0;
     }
 }

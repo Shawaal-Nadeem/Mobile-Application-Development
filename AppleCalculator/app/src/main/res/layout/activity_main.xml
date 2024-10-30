@@ -56,11 +56,7 @@
             android:id="@+id/num1"
             android:textColor="@color/white"
             style="@style/Button3"/>
-        <Button
-            android:text="ic"
-            android:id="@+id/icon"
-            android:textColor="@color/white"
-            style="@style/Button3"/>
+
         
     </LinearLayout>
     <LinearLayout
