@@ -1,0 +1,10 @@
+<resources>
+
+        <string name="app_name">TabLayout with FrameLayout</string>
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="home_fragment">Home fragment</string>
+        <string name="java_fragment">News fragment</string>
+        <string name="android_fragment">Music fragment</string>
+        <string name="php_fragment">Feedback fragment</string>
+
+</resources>
