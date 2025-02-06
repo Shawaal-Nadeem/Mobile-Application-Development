@@ -17,11 +17,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/Button"
+        android:id="@+id/CounterText"
         android:layout_width="143dp"
         android:layout_height="48dp"
         android:text="Click"
         tools:layout_editor_absoluteX="134dp"
         tools:layout_editor_absoluteY="101dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="242dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

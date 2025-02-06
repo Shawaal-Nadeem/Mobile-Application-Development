@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="0"
+        android:textAlignment="textEnd"
         android:textStyle="bold"
         android:textSize="60dp"
         android:textColor="#FFFFFF"
