@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0000000">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF9800"
+                android:text="Workout Detail Page"
+                android:textSize="32sp"
+                android:textColor="#FFF"
+                android:textAlignment="center"
+                android:fontFamily="serif"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp"
+                android:elevation="4dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workoutRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:textColor="#FFF"
+        android:backgroundTint="#FF9800"/>
+
+</RelativeLayout>

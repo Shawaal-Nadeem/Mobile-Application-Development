@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/signup"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/finallogo" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="FitTrack"
+            android:textColor="#FFF"
+            android:textSize="45dp"
+
+            />
+
+        <TextView
+            android:id="@+id/signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="SignUp"
+            android:textColor="#FFF"
+            android:textSize="35dp" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/signup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="#9CFFFFFF"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="20dp"
+            android:hint="user name"
+            android:textColor="#FFF"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="#9CFFFFFF"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="20dp"
+            android:hint="Password"
+            android:textColor="#FFF"
+            android:textSize="25dp"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/Signupbtn"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="20dp"
+            android:text="SignUp"
+            android:backgroundTint="#FF9800"
+            android:textColor="#FFF"
+            android:textSize="25dp"
+            />
+
+        <TextView
+            android:id="@+id/signinText"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/Signupbtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="0dp"
+            android:text="Already have an account?"
+            android:textColor="#FFF"
+            android:textSize="19dp" />
+
+        <TextView
+            android:id="@+id/signinText"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/Signupbtn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="222dp"
+            android:text="Sign-in"
+            android:textColor="#FFF"
+            android:textSize="19dp"
+           />
+    </RelativeLayout>
+
+</LinearLayout>
